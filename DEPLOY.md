@@ -4,7 +4,7 @@ A production deploy of the prototype to Vercel takes ~5 minutes. The
 standalone UI in this repo is the proof of the [`HEADLESS_API.md`](Docs/HEADLESS_API.md)
 contracts; production lives inside Nexford's Canvas.
 
-**Demo mode:** [`vercel.json`](vercel.json) does **not** set `NEXT_PUBLIC_DEMO_MODE`. For **live** Mentor / Profiler / Supabase behaviour in Production, set the four variables below and **omit** `NEXT_PUBLIC_DEMO_MODE` (or set it to `false`). For a **flaky-demo** or offline rehearsal only, you can set `NEXT_PUBLIC_DEMO_MODE=true` in Vercel or in `frontend/.env.local` locally.
+**Demo mode:** no forced `NEXT_PUBLIC_DEMO_MODE` in config. For **live** Mentor / Profiler / Supabase behaviour in Production, set the four variables below and **omit** `NEXT_PUBLIC_DEMO_MODE` (or set it to `false`). For a **flaky-demo** or offline rehearsal only, you can set `NEXT_PUBLIC_DEMO_MODE=true` in Vercel Project Settings → Environment Variables, or in `frontend/.env.local` locally.
 
 ## Prerequisites
 
@@ -19,7 +19,8 @@ contracts; production lives inside Nexford's Canvas.
 ```bash
 # 1. From the repo root, link the project. When prompted for the
 #    *project root*, point Vercel at frontend/ — the Next.js app lives
-#    there. The repo-root vercel.json sets framework + region defaults.
+#    there. Vercel auto-detects Next.js from frontend/package.json;
+#    no repo-level vercel.json is required.
 vercel link
 
 # 2. Push required env vars to Vercel (Production scope).
@@ -59,7 +60,8 @@ If `/api/chat` errors with a 500, check the Vercel function log for
 
 - **Next.js 16 / React 19 build warnings.** Expected; the build still
   produces a green deploy.
-- **Edge function regional pinning.** `vercel.json` pins to `iad1` for
-  consistent OpenAI latency. Change this if you're demoing from EU.
+- **Edge function regional pinning.** Set region in Vercel Dashboard →
+  Project → Settings → Functions → Region (e.g. `iad1` for consistent
+  OpenAI latency from US-East). Change if you're demoing from EU.
 - **Optional demo flag:** If you add `NEXT_PUBLIC_DEMO_MODE`, it must be the
   string `"true"` to enable fixtures. Omit it for live OpenAI + Supabase.

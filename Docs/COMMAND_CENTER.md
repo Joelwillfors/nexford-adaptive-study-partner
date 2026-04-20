@@ -25,7 +25,7 @@ Use this page when you need **one place** that points to the right artefact. Rep
 | Document | Purpose |
 |----------|---------|
 | [`../DEPLOY.md`](../DEPLOY.md) | Vercel: `frontend/` as root, env vars, `vercel deploy --prod`. |
-| [`../vercel.json`](../vercel.json) | Region (`iad1`) and framework defaults — **does not** force `NEXT_PUBLIC_DEMO_MODE`. |
+| Vercel project settings | Framework is auto-detected from `frontend/package.json`; region + env-vars live in Vercel Dashboard rather than in a repo-level config file. |
 
 ---
 
