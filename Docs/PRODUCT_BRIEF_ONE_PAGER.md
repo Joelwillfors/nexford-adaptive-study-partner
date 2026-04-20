@@ -1,10 +1,12 @@
-# Nexford Adaptive Study Partner — One-Pager
+# Nexford Adaptive Study Partner — Product Brief
 
 *The intelligence layer that docks into Nexford's Canvas to win the persistence war.*
 
 **Live prototype:** [nexford-adaptive-study-partner.vercel.app](https://nexford-adaptive-study-partner.vercel.app/) · **Source on GitHub:** [Joelwillfors/nexford-adaptive-study-partner](https://github.com/Joelwillfors/nexford-adaptive-study-partner) · **Long-form brief:** [`Docs/PRODUCT_BRIEF.md`](https://github.com/Joelwillfors/nexford-adaptive-study-partner/blob/main/Docs/PRODUCT_BRIEF.md) · **Roadmap:** [`Docs/ROADMAP.md`](https://github.com/Joelwillfors/nexford-adaptive-study-partner/blob/main/Docs/ROADMAP.md)
 
 *90-second CPO memo. [Download as PDF](https://github.com/Joelwillfors/nexford-adaptive-study-partner/blob/main/Docs/PRODUCT_BRIEF_ONE_PAGER.pdf) for offline / iPad reading.*
+
+*Joel Willfors · Nexford AI Product Specialist assignment · April 2026*
 
 ---
 
