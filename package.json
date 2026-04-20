@@ -4,6 +4,8 @@
   "version": "0.0.0",
   "scripts": {
     "build:onepager-pdf": "node scripts/build-onepager-pdf.mjs",
+    "build:command-center-pdf": "node scripts/build-md-pdf.mjs --in Docs/COMMAND_CENTER.md --out Docs/COMMAND_CENTER.pdf",
+    "build:public-pdfs": "npm run build:onepager-pdf && npm run build:command-center-pdf",
     "build:demo-pdf": "node scripts/build-md-pdf.mjs --in Docs/.archive/DEMO_SCRIPT.md --out Docs/.archive/DEMO_SCRIPT.pdf",
     "build:interview-prep-pdf": "node scripts/build-md-pdf.mjs --in Docs/.archive/INTERVIEW_PREP.md --out Docs/.archive/INTERVIEW_PREP.pdf",
     "build:extra-pdfs": "npm run build:demo-pdf && npm run build:interview-prep-pdf"

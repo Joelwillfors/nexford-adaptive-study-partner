@@ -46,6 +46,8 @@ vercel deploy --prod
 
 ## Smoke test the live URL
 
+Current production deploy: [https://nexford-adaptive-study-partner.vercel.app/](https://nexford-adaptive-study-partner.vercel.app/).
+
 After deploy, hit the URL and:
 
 - `/` should render the role-toggle landing page.

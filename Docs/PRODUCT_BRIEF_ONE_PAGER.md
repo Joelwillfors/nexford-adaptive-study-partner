@@ -1,10 +1,10 @@
 # Nexford Adaptive Study Partner — One-Pager
 
-*[Download as PDF](PRODUCT_BRIEF_ONE_PAGER.pdf) for offline / iPad reading.*
+*[Download as PDF](https://github.com/Joelwillfors/nexford-adaptive-study-partner/blob/main/Docs/PRODUCT_BRIEF_ONE_PAGER.pdf) for offline / iPad reading.*
 
 *The intelligence layer that docks into Nexford's Canvas to win the persistence war.*
 
-*90-second CPO memo. Long-form: [`Docs/PRODUCT_BRIEF.md`](./PRODUCT_BRIEF.md).*
+*90-second CPO memo. Long-form: [`Docs/PRODUCT_BRIEF.md`](https://github.com/Joelwillfors/nexford-adaptive-study-partner/blob/main/Docs/PRODUCT_BRIEF.md). Live prototype: [nexford-adaptive-study-partner.vercel.app](https://nexford-adaptive-study-partner.vercel.app/).*
 
 ---
 
@@ -12,14 +12,14 @@
 
 ## Problem
 
-Three principals share one metric. The **student** needs autonomy (the schedule fits their life), competence (they earn the *aha*), relatedness (the system noticed them). The **instructor** needs *which student, which concept, what intervention* this week, not at term-end. The **CPO** needs persistence to be defensible and cheap to scale. Nexford's own materials anchor the friction surface: 10 hours/week is the floor; 12–15 is what successful students sustain — exactly where *"I'll catch up Sunday"* becomes *"I missed three weeks,"* and the band Atlas's deterministic Planner ([`planner-agent.ts`](../frontend/src/lib/ai/planner-agent.ts)) is built to hold.
+Three principals share one metric. The **student** needs autonomy (the schedule fits their life), competence (they earn the *aha*), relatedness (the system noticed them). The **instructor** needs *which student, which concept, what intervention* this week, not at term-end. The **CPO** needs persistence to be defensible and cheap to scale. Nexford's own materials anchor the friction surface: 10 hours/week is the floor; 12–15 is what successful students sustain — exactly where *"I'll catch up Sunday"* becomes *"I missed three weeks,"* and the band Atlas's deterministic Planner ([`planner-agent.ts`](https://github.com/Joelwillfors/nexford-adaptive-study-partner/blob/main/frontend/src/lib/ai/planner-agent.ts)) is built to hold.
 
 ## Why AI — four persistence levers, each tied to a code path
 
 - **Always-on tutor at the moment of struggle** — Socratic Mentor (RAG, GPT-4o, threshold-calibrated 0.50 after a documented silent-retrieval failure at 0.72). *"Explain this"* hover replaces the *"I need help"* click no one ever clicks.
 - **A system that knows the student personally by turn #4** — the Profiler writes `reasoning_step_failed` / `misconception` / `bottleneck` into a per-student knowledge graph. SDT relatedness.
 - **A schedule that fits the student's life** — Atlas, function-calling, exposes five tools (`set_availability_rule`, `move_slot`, `add_remediation`, `trim_day`, `clear_availability_rule`); deterministic Planner re-plans hour-aware against the 12–15h band. Autonomy.
-- **Compounding nightly improvement** — Tier 3 Adaptive Meta-Agent in [`Docs/ROADMAP.md`](./ROADMAP.md): a system that gets better at retaining students every night.
+- **Compounding nightly improvement** — Tier 3 Adaptive Meta-Agent in [`Docs/ROADMAP.md`](https://github.com/Joelwillfors/nexford-adaptive-study-partner/blob/main/Docs/ROADMAP.md): a system that gets better at retaining students every night.
 
 Nexford's pedagogy — *"we don't hand you answers"* — is the Mentor's system prompt as marketing copy. Pedagogy as architecture, not as ask. **Where AI was avoided** — slot placement, risk score, Journey View — is deterministic for trust, not cost. Trust is itself a persistence lever.
 
@@ -32,7 +32,7 @@ Nexford's pedagogy — *"we don't hand you answers"* — is the Mentor's system 
 - **Planning — Atlas + the deterministic Planner.** Atlas handles intent; Planner handles math against Nexford's 12–15h band.
 - **Closing the loop — the Watchlist.** Four-level drilldown turns silent struggle into intervention this week.
 
-**Cary's pedagogy sibling (portfolio sense).** Cary lives in Nexford's **career success** surface — resume, coaching, job fit — not in the Canvas reading view. Cary still proves **named, role-scoped AI** works at Nexford; it does **not** prove this product embeds the same way. **Study-time** persistence lands **Canvas-first** (lecture, calendar, instructor) via [`LMSProvider`](../frontend/src/lib/lms/provider.ts). *Where Cary chose the program, the Study Partner gets the student through it.* Shared identity with Cary is a roadmap decision, not assumed in this build.
+**Cary's pedagogy sibling (portfolio sense).** Cary lives in Nexford's **career success** surface — resume, coaching, job fit — not in the Canvas reading view. Cary still proves **named, role-scoped AI** works at Nexford; it does **not** prove this product embeds the same way. **Study-time** persistence lands **Canvas-first** (lecture, calendar, instructor) via [`LMSProvider`](https://github.com/Joelwillfors/nexford-adaptive-study-partner/blob/main/frontend/src/lib/lms/provider.ts). *Where Cary chose the program, the Study Partner gets the student through it.* Shared identity with Cary is a roadmap decision, not assumed in this build.
 
 The four highest-leverage decisions, all justified as persistence calls:
 
@@ -43,8 +43,8 @@ The four highest-leverage decisions, all justified as persistence calls:
 
 ## Why this works — the persistence science
 
-- **Calibrated confidence (Dunlosky, 2013).** The predictable dropout is the *confidently wrong* student. Mastery is gated on probe-correct **and** confidence ≠ guessing — not just a right answer — in [`handleQuizResponse`](../frontend/src/app/api/chat/route.ts). Completion is the wrong metric; calibration is.
-- **Spacing + load + interleaving (Ebbinghaus; Sweller; Bjork).** The #1 qualitative dropout complaint is *"I don't know how to schedule this."* The Planner is deterministic, forgetting-curve-weighted, load-budgeted at 3 units/day, and deliberately interleaved — [`planner-agent.ts`](../frontend/src/lib/ai/planner-agent.ts). A schedule students trust is a schedule they follow.
+- **Calibrated confidence (Dunlosky, 2013).** The predictable dropout is the *confidently wrong* student. Mastery is gated on probe-correct **and** confidence ≠ guessing — not just a right answer — in [`handleQuizResponse`](https://github.com/Joelwillfors/nexford-adaptive-study-partner/blob/main/frontend/src/app/api/chat/route.ts). Completion is the wrong metric; calibration is.
+- **Spacing + load + interleaving (Ebbinghaus; Sweller; Bjork).** The #1 qualitative dropout complaint is *"I don't know how to schedule this."* The Planner is deterministic, forgetting-curve-weighted, load-budgeted at 3 units/day, and deliberately interleaved — [`planner-agent.ts`](https://github.com/Joelwillfors/nexford-adaptive-study-partner/blob/main/frontend/src/lib/ai/planner-agent.ts). A schedule students trust is a schedule they follow.
 
 ## What I learned
 
@@ -66,7 +66,7 @@ flowchart LR
     SendReview["Send Review"] -->|POST gradebook export| CanvasGradebook["Canvas gradebook"]
 ```
 
-Same JSON, two clients. Standalone surfaces in the demo are receipts for these contracts; full route inventory in [`Docs/HEADLESS_API.md`](./HEADLESS_API.md).
+Same JSON, two clients. Standalone surfaces in the demo are receipts for these contracts; full route inventory in [`Docs/HEADLESS_API.md`](https://github.com/Joelwillfors/nexford-adaptive-study-partner/blob/main/Docs/HEADLESS_API.md).
 
 ## Ship next — embed inside the Canvas the student already opens
 
@@ -74,7 +74,7 @@ Production isn't a destination site — it's an **intelligence layer on the page
 
 **Right after the embed lands — Automated Remediation auto-trigger:** Atlas's `add_remediation` plus the Profiler's bottleneck flags is two API calls and a cron job from the first *compounding* persistence loop in the system.
 
-**On the horizon — the Adaptive Meta-Agent (Tier 3, [`Docs/ROADMAP.md`](./ROADMAP.md)):** a nightly job that A/B tests Mentor metaphors, learns which framings retain students, and updates the system prompt with the winners. The system that gets better at retaining students every night, without a human in the loop. This is the destination AI is taking us toward, and it is roadmap — never a Q2 commitment.
+**On the horizon — the Adaptive Meta-Agent (Tier 3, [`Docs/ROADMAP.md`](https://github.com/Joelwillfors/nexford-adaptive-study-partner/blob/main/Docs/ROADMAP.md)):** a nightly job that A/B tests Mentor metaphors, learns which framings retain students, and updates the system prompt with the winners. The system that gets better at retaining students every night, without a human in the loop. This is the destination AI is taking us toward, and it is roadmap — never a Q2 commitment.
 
 ## Closing
 

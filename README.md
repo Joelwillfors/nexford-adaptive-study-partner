@@ -10,9 +10,9 @@ If you only have ten minutes, start with [`SUBMISSION.md`](SUBMISSION.md). For a
 
 | What | Why this exists |
 |---|---|
-| **Live prototype on Vercel** | *(paste your Production URL after [`DEPLOY.md`](DEPLOY.md))* — Live OpenAI + Supabase when env vars are set; optional `NEXT_PUBLIC_DEMO_MODE=true` only for deterministic fixtures. |
+| **[Live prototype on Vercel](https://nexford-adaptive-study-partner.vercel.app/)** | Live OpenAI + Supabase when env vars are set; optional `NEXT_PUBLIC_DEMO_MODE=true` only for deterministic fixtures. |
 | **[Product brief (PDF)](Docs/PRODUCT_BRIEF_ONE_PAGER.pdf)** | The strategic motivation, the unit economics, the persistence thesis — printable / iPad. |
-| **Source code & API contracts (GitHub)** | *(paste repository URL after `git push`)* — Technical depth; headless API inventory in [`Docs/HEADLESS_API.md`](Docs/HEADLESS_API.md). |
+| **[Source code & API contracts (GitHub)](https://github.com/Joelwillfors/nexford-adaptive-study-partner)** | Technical depth; headless API inventory in [`Docs/HEADLESS_API.md`](Docs/HEADLESS_API.md). |
 
 Regenerate the PDF after editing the one-pager: run `npm run build:onepager-pdf` from the repo root (after `npm install` once).
 
@@ -30,7 +30,7 @@ Built in 48 hours for the assignment. The 48-hour build is the proof that the co
 
 The deploy runs **live** against OpenAI + Supabase when the production env vars from [`DEPLOY.md`](DEPLOY.md) are set; deterministic demo fixtures are available via the optional `NEXT_PUBLIC_DEMO_MODE=true` flag. Identity is hardcoded to the seeded student (Sara Patel); all four cognitive functions wire up against a single seeded course (Business Fundamentals — accounting).
 
-- **Deployed URL** — paste in the Command Center table above after you run [`DEPLOY.md`](DEPLOY.md). Production uses your Vercel env vars; demo fixtures are optional.
+- **Deployed URL** — [nexford-adaptive-study-partner.vercel.app](https://nexford-adaptive-study-partner.vercel.app/). Production uses the Vercel env vars described in [`DEPLOY.md`](DEPLOY.md); demo fixtures are optional.
 - Toggle between the **Student** view (`/`, `/learn`, `/journey`, `/plan`) and the **Teacher** view (`/teacher`, `/teacher/watchlist`, `/teacher/student/[id]`) using the role pill in the top nav.
 - The narrative path the demo script walks: hover a sentence on a lecture page → Mentor opens → ask the gym-membership question → mode switches after 2 wrong → Profiler records the bottleneck → Watchlist surfaces it for the instructor → Atlas re-plans the week.
 
