@@ -11,6 +11,9 @@ Docs/.onepager-pdf-tmp/
 # Supabase CLI local link cache (do not commit project ref / pooler URLs)
 supabase/.temp/
 
+# Vercel CLI link cache (created by `vercel link`; contains project ref)
+.vercel
+
 # macOS junk
 .DS_Store
 **/.DS_Store

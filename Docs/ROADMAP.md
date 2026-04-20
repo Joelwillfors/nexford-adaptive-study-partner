@@ -153,6 +153,7 @@ Five buckets. Each item is one sentence of value framing, one sentence of why it
 
 ### Retention, Predictive Analytics & Re-engagement
 
+- **Calibration surface (Brier score + Confidently-Wrong list).** Per-student / per-concept Brier score comparing said-mastery (probe confidence) against observed-mastery (next-session performance); a Watchlist column that ranks students by *confidence-minus-correctness* gap — the predictable-dropout signal Dunlosky (2013) names and the ONE_PAGER claims today as architecture. *Deferred because* it needs a longitudinal confidence ledger (3+ weeks per student) before the score is more than noise; the probe-gate that feeds it shipped in v0.4.
 - **Predictive drop-off tracking.** Behavioral pattern detection (e.g., *"10 consecutive inactive days from the Mentor → 100% increased dropout probability"*) running off existing chat-session and profiler logs. *Deferred because* the predictive model needs longitudinal data we won't have until cohort 1 finishes.
 - **Teacher alerts & automated triggers.** When a drop-off threshold trips, flag it for the teacher AND fire an automated re-engagement email (*"Socrates misses you"*). *Deferred because* it depends on the predictive model above and a transactional-email integration we haven't scoped.
 - **Frictionless soft-starts.** If a student is flagged as slipping, the homepage swaps their next heavy module for a low-friction quiz to rebuild momentum. *Deferred because* it requires a "module weight" attribute on the curriculum we have not yet authored.
@@ -186,6 +187,7 @@ Five buckets. Each item is one sentence of value framing, one sentence of why it
 These are the ambitions that justify the platform's existence at year three. They appear as **talk-track items in the demo, never as roadmap commitments.**
 
 - **The Adaptive Meta-Agent.** A nightly background ML job that analyzes database logs to discover which explanations actually work. *e.g., "When we explain Accrued Revenue using 'Gym Memberships', 80% achieve a Victory Lap in 3 turns. With 'Flight Tickets' it takes 8 turns."* The agent autonomously updates the Mentor's system prompt to favor the winning analogy. This is the system that, in principle, makes the Mentor get better every night without a human in the loop. It is also the system most likely to silently degrade into an unaligned local optimum, which is why it is roadmap, not feature.
+- **Far-transfer probe generation + `near_mastery` / `far_mastery` split.** LLM-generated transfer probes that restate a concept in a deliberately unfamiliar domain (accrual timing surfaced as a subscription-refund scenario rather than the gym-membership analogy the student already saw); mastery is scored twice — once at the teaching-context level (`near_mastery`) and once at the transfer-context level (`far_mastery`) — and the delta is the leading indicator of degree-value rather than course-completion. Barnett & Ceci (2002) is the citation this unlocks. *Never a Q2 commitment* — it needs a far-transfer eval harness we do not yet have and a second curriculum to prove the generator generalises.
 - **Reversed Learning Playground (full version).** Not just a feature — a parallel curriculum mode where the Mentor's pedagogy inverts. A multi-quarter pedagogy bet.
 
 ---
@@ -200,6 +202,14 @@ The list of things we deliberately did not build, with the reason. This is the m
 - **Recap Agent and Curator Agent (from the original 6-agent model).** Only Mentor / Profiler / Planner shipped. The other two were valuable on paper but each added an LLM call to the critical path with marginal demo signal. Roadmap.
 - **Drag-and-drop calendar.** Cut to "Move Earlier / Move Later" buttons. `@dnd-kit` was a 2-hour build-and-debug for a feature the function-calling Planner now makes more impressive without it (the LLM moves slots; the user just talks).
 - **A second course or module just for breadth.** Considered, rejected. Breadth without depth signals "I built fast" rather than "I built well." The current course's seeded narrative does more work in a 10-minute demo than a half-finished second course would.
+
+---
+
+## Next thing I'd delete — once the Canvas embed ships
+
+The one surface in the prototype that exists only to prove a contract, not to be a product feature:
+
+- **Standalone `Import from Canvas` button** ([`LMSProvider`](../frontend/src/lib/lms/provider.ts) caller in the student + teacher surfaces). Today it proves the provider contract works end-to-end without a real Canvas tenant. Once the Mentor side-panel and Atlas overlay are embedded inside Canvas via LTI 1.3, the button becomes redundant — the student is already *inside* Canvas; there is nothing to import. First thing to delete on the day the embed ships. Same disposition for the entire standalone management surface (teacher dashboard as a destination page) — institutional analytics belong inside Canvas, not alongside it.
 
 ---
 

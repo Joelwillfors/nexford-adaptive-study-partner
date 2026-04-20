@@ -28,7 +28,7 @@ Built in 48 hours for the assignment. The 48-hour build is the proof that the co
 
 ## Try the live demo
 
-The demo runs in **demo mode** with deterministic fixtures — no auth, hardcoded UUID for the seeded student (Sara Patel), all four cognitive functions wired up against a single seeded course (Business Fundamentals — accounting).
+The deploy runs **live** against OpenAI + Supabase when the production env vars from [`DEPLOY.md`](DEPLOY.md) are set; deterministic demo fixtures are available via the optional `NEXT_PUBLIC_DEMO_MODE=true` flag (see [`Docs/DEMO_SCRIPT.md`](Docs/DEMO_SCRIPT.md)). Identity is hardcoded to the seeded student (Sara Patel); all four cognitive functions wire up against a single seeded course (Business Fundamentals — accounting).
 
 - **Deployed URL** — paste in the Command Center table above after you run [`DEPLOY.md`](DEPLOY.md). Production uses your Vercel env vars; demo fixtures are optional.
 - Toggle between the **Student** view (`/`, `/learn`, `/journey`, `/plan`) and the **Teacher** view (`/teacher`, `/teacher/watchlist`, `/teacher/student/[id]`) using the role pill in the top nav.

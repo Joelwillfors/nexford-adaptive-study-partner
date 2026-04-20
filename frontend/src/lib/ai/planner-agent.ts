@@ -333,7 +333,7 @@ export function generateWeeklyPlan(input: PlanInput): WeekPlan {
   const newConcepts = scored.filter((s) => !s.knowledge).length;
   const baseSummary =
     struggling > 0
-      ? `Front-loaded ${struggling} weak concept${struggling === 1 ? "" : "s"} early in the week — intervene while the trace is fresh, then space the review.`
+      ? `Front-loaded ${struggling} weak concept${struggling === 1 ? "" : "s"} early — intervene while the trace is fresh.`
       : newConcepts > 0
         ? `Heavier on new material early in the week with mid-week consolidation passes.`
         : `Consolidation week — short spaced reviews to lock in mastery without overload.`;
@@ -354,7 +354,7 @@ export function generateWeeklyPlan(input: PlanInput): WeekPlan {
       })
       .join(", ");
     rationaleSummary =
-      `${baseSummary} Constrained by your calendar: ${constrained} cleared or trimmed, and the displaced study time was redistributed to the days with open windows.`;
+      `${baseSummary} Constrained by your calendar: ${constrained} cleared; study time redistributed to open days.`;
   }
 
   return {

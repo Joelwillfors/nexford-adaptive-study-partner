@@ -56,6 +56,14 @@ interface MessageRequest {
   userId: string;
   sessionId: string;
   lms?: LmsContext;
+  // Turn-level intent (distinct from the top-level router `kind`). When
+  // "explain_passage", the student clicked "Explain this" on a lesson
+  // paragraph and the mentor must treat the quoted text as reference
+  // material, not the student's scenario. Paired with `focusConcept`, we
+  // also scope history to the matching concept so prior concepts' nouns
+  // cannot bleed into the reply.
+  turnKind?: "explain_passage";
+  focusConcept?: string;
 }
 
 interface CheckpointRequest {
@@ -134,7 +142,7 @@ function demoCheckpointQuiz(concept: string): AssistantMessage {
 async function handleMessage(
   req: MessageRequest,
 ): Promise<NextResponse<ChatResponse | { error: string }>> {
-  const { question, courseId, userId, sessionId, lms } = req;
+  const { question, courseId, userId, sessionId, lms, turnKind, focusConcept } = req;
   if (!question?.trim()) {
     return NextResponse.json(
       { error: "question required" },
@@ -194,6 +202,24 @@ async function handleMessage(
     .reverse()
     .find((t) => t.role === "mentor")?.mode ?? "socratic";
 
+  // Explain-this history scope. On a passage-explain turn, a concept from a
+  // prior topic ("the $10,000 server") should not bleed into the new reply.
+  // We drop turns whose concept_tag differs from the paragraph's concept;
+  // untagged turns (often the student's opener) are kept. Non-passage turns
+  // use the full history unchanged.
+  const scopedFocusConcept = canonicalConceptTag(focusConcept) ?? focusConcept ?? null;
+  const scopedHistory: ChatTurn[] =
+    turnKind === "explain_passage" && scopedFocusConcept
+      ? history.filter(
+          (t) => !t.concept_tag || t.concept_tag === scopedFocusConcept,
+        )
+      : history;
+  if (turnKind === "explain_passage" && scopedFocusConcept) {
+    console.log(
+      `[Chat:${sessionId.slice(0, 8)}] explain_passage — history scoped to "${scopedFocusConcept}": ${history.length} -> ${scopedHistory.length} turns`,
+    );
+  }
+
   // Active concept = concept_tag of the most recent mentor turn. Used to
   // scope mode/quiz-fail decisions: unrelated quizzes on other concepts must
   // never dictate mode on the current concept.
@@ -232,7 +258,7 @@ async function handleMessage(
   if (DEMO_MODE) {
     const decision = await decideMode({
       currentMode: lastMentorMode,
-      history,
+      history: scopedHistory,
       currentTurn: question,
       latestQuizResult,
     });
@@ -244,7 +270,7 @@ async function handleMessage(
     const result = await runSocraticMentor(sb, {
       question: question.trim(),
       courseId,
-      history,
+      history: scopedHistory,
       currentMode: lastMentorMode,
       lms,
       latestQuizResult,

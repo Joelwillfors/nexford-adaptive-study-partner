@@ -20,8 +20,8 @@ import { DEMO_MODE } from "@/lib/flags";
  */
 
 const FALLBACK = {
-  concept: "depreciation",
-  label: "Depreciation",
+  concept: "accrual_vs_cash",
+  label: "Accrual vs Cash",
   lastSeen: null as string | null,
   interventionCost: 3,
   source: "demo_seed" as const,

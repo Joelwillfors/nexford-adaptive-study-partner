@@ -110,6 +110,10 @@ export function MentorDrawer({
   // understand why the mentor is opening cold on a specific scenario.
   const [pendingFocus, setPendingFocus] = useState<string | null>(null);
   const [focusConcept, setFocusConcept] = useState<string | null>(null);
+  // When the queued focus came from nx:explain (not nx:focus), this ref
+  // holds the paragraph's canonical concept so the drain effect can tag the
+  // outbound fetch as an "explain_passage" turn. Cleared after drain.
+  const pendingExplainConceptRef = useRef<string | null>(null);
 
   useEffect(() => {
     messagesRef.current = messages;
@@ -374,9 +378,11 @@ export function MentorDrawer({
   }, []);
 
   // nx:explain — fired by LessonReader when the student selects a paragraph
-  // and clicks "Explain this". We frame the anchor as a hidden student
-  // message and queue it through the same focus pipeline so the existing
-  // gating (sessionId ready, drawer idle, soft 400ms reveal) applies.
+  // and clicks "Explain this". We frame the anchor as a labeled LESSON
+  // EXCERPT (not the student's own scenario) and tag it with
+  // kind: "explain_passage" + focusConcept so the API can scope history
+  // and the Socratic prompt can branch to "passage-explain" mode. Prevents
+  // the model from echoing lesson nouns as "your subscription business".
   useEffect(() => {
     const listener = (e: Event) => {
       const custom = e as CustomEvent<{ anchor: string; concept?: string }>;
@@ -385,8 +391,13 @@ export function MentorDrawer({
       const concept = custom.detail?.concept;
       const trimmed =
         anchor.length > 320 ? `${anchor.slice(0, 317)}…` : anchor;
-      const framed = `Can you explain this for me with a concrete example? "${trimmed}"`;
+      const conceptLabel = concept ? formatConceptTag(concept) : "the current section";
+      const framed =
+        `I highlighted this passage from the lesson on ${conceptLabel} and want a concrete example that illustrates it. ` +
+        `(Lesson excerpt — this is the course material, not my own scenario.)\n\n` +
+        `> ${trimmed}`;
       if (concept) setFocusConcept(concept);
+      pendingExplainConceptRef.current = concept ?? null;
       setInput(framed);
       setPendingFocus(framed);
     };
@@ -401,16 +412,28 @@ export function MentorDrawer({
   useEffect(() => {
     if (!sessionId || loading || !pendingFocus) return;
     const toSend = pendingFocus;
+    const explainConcept = pendingExplainConceptRef.current;
     const timer = setTimeout(() => {
       setPendingFocus(null);
       setInput("");
-      sendMessage(toSend);
+      pendingExplainConceptRef.current = null;
+      if (explainConcept !== null) {
+        sendMessage(toSend, {
+          kind: "explain_passage",
+          focusConcept: explainConcept ?? undefined,
+        });
+      } else {
+        sendMessage(toSend);
+      }
     }, 400);
     return () => clearTimeout(timer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sessionId, loading, pendingFocus]);
 
-  async function sendMessage(text: string) {
+  async function sendMessage(
+    text: string,
+    options?: { kind?: "explain_passage"; focusConcept?: string },
+  ) {
     if (!text || loading || !sessionId) return;
     userScrolledUpRef.current = false;
     lastUserActionRef.current = "message";
@@ -433,6 +456,12 @@ export function MentorDrawer({
           userId: DEMO_STUDENT.id,
           sessionId,
           lms: lmsContext,
+          ...(options?.kind === "explain_passage"
+            ? {
+                turnKind: "explain_passage" as const,
+                focusConcept: options.focusConcept,
+              }
+            : {}),
         }),
       });
       const data = await res.json();
@@ -473,6 +502,7 @@ export function MentorDrawer({
     userScrolledUpRef.current = false;
     pendingCheckpointsRef.current = [];
     setPendingFocus(null);
+    pendingExplainConceptRef.current = null;
   }
 
   // A quiz is "sealed" once its concept has been closed by a Victory Lap or

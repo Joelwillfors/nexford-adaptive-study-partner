@@ -4,7 +4,7 @@
 
 *The intelligence layer that docks into Nexford's Canvas to win the persistence war.*
 
-*90-second CPO memo. Long-form: [`Docs/PRODUCT_BRIEF.md`](./PRODUCT_BRIEF.md). Live walkthrough: [`Docs/DEMO_SCRIPT.md`](./DEMO_SCRIPT.md).*
+*90-second CPO memo. Long-form: [`Docs/PRODUCT_BRIEF.md`](./PRODUCT_BRIEF.md).*
 
 ---
 
@@ -23,6 +23,8 @@ Three principals share one metric. The **student** needs autonomy (the schedule 
 
 Nexford's pedagogy — *"we don't hand you answers"* — is the Mentor's system prompt as marketing copy. Pedagogy as architecture, not as ask. **Where AI was avoided** — slot placement, risk score, Journey View — is deterministic for trust, not cost. Trust is itself a persistence lever.
 
+<div class="page-break"></div>
+
 ## What I built — one Adaptive Study Partner, four cognitive functions
 
 - **Sensing — the Profiler.** Async pass after every Mentor exchange; structured diagnostics into JSONB.
@@ -38,6 +40,11 @@ The four highest-leverage decisions, all justified as persistence calls:
 2. **`LMSProvider` mock + stub instead of fake Canvas.** *Send Review* writes idempotently to a real `gradebook_exports` table — same demo time as a fake button, three times the credibility.
 3. **Watchlist 4-level drilldown.** Row → factor breakdown → all weak concepts → concept page or full student profile. Catches the silent middle this week.
 4. **Mode switching as RAG escape hatch.** After 3 *I-don't-know* or 2 wrong answers, Socrates flips into Direct Instruction — permitted to invent novel analogies (Accrued Revenue ≈ a gym membership) the syllabus doesn't contain. Knowing when to relax a technical constraint in favor of human pedagogy is the AI product judgment most builds get wrong.
+
+## Why this works — the persistence science
+
+- **Calibrated confidence (Dunlosky, 2013).** The predictable dropout is the *confidently wrong* student. Mastery is gated on probe-correct **and** confidence ≠ guessing — not just a right answer — in [`handleQuizResponse`](../frontend/src/app/api/chat/route.ts). Completion is the wrong metric; calibration is.
+- **Spacing + load + interleaving (Ebbinghaus; Sweller; Bjork).** The #1 qualitative dropout complaint is *"I don't know how to schedule this."* The Planner is deterministic, forgetting-curve-weighted, load-budgeted at 3 units/day, and deliberately interleaved — [`planner-agent.ts`](../frontend/src/lib/ai/planner-agent.ts). A schedule students trust is a schedule they follow.
 
 ## What I learned
 
@@ -63,7 +70,11 @@ Same JSON, two clients. Standalone surfaces in the demo are receipts for these c
 
 ## Ship next — embed inside the Canvas the student already opens
 
-Production isn't a destination site — it's an **intelligence layer on the page the student already opens.** Socrates next to the lecture text; Atlas next to the calendar; Watchlist inside the instructor's existing dashboard. The 48-hour build is the proof the contract holds; LTI 1.3 + scope negotiation is institutional sales motion, not engineering scope. **Right after that ships, the Automated Remediation auto-trigger lands** — Atlas's `add_remediation` plus the Profiler's bottleneck flags is two API calls and a cron job from the first compounding persistence loop in the system.
+Production isn't a destination site — it's an **intelligence layer on the page the student already opens.** Socrates next to the lecture text; Atlas next to the calendar; Watchlist inside the instructor's existing dashboard. The 48-hour build is the proof the contract holds; LTI 1.3 + scope negotiation is institutional sales motion, not engineering scope.
+
+**Right after the embed lands — Automated Remediation auto-trigger:** Atlas's `add_remediation` plus the Profiler's bottleneck flags is two API calls and a cron job from the first *compounding* persistence loop in the system.
+
+**On the horizon — the Adaptive Meta-Agent (Tier 3, [`Docs/ROADMAP.md`](./ROADMAP.md)):** a nightly job that A/B tests Mentor metaphors, learns which framings retain students, and updates the system prompt with the winners. The system that gets better at retaining students every night, without a human in the loop. This is the destination AI is taking us toward, and it is roadmap — never a Q2 commitment.
 
 ## Closing
 

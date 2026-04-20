@@ -135,3 +135,33 @@ em {
   font-style: italic;
   font-weight: inherit;
 }
+
+.page-break {
+  page-break-before: always;
+  break-before: page;
+  height: 0;
+}
+
+h1,
+h2,
+h3 {
+  page-break-after: avoid;
+  break-after: avoid-page;
+}
+
+table,
+blockquote,
+pre {
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+li {
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+p {
+  orphans: 3;
+  widows: 3;
+}

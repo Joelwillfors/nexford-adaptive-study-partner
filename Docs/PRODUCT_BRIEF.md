@@ -124,6 +124,18 @@ The Adaptive Study Partner is **Cary's pedagogy sibling** in the **portfolio** s
 - **Watchlist 4-level drilldown.** Where the institutional persistence machinery lives. The strongest "real product" surface in the build because catching the silent middle this week is the highest-leverage persistence intervention available to a teacher.
 - **Demo hardening as architecture** — `NEXT_PUBLIC_DEMO_MODE`, pre-warm script, cached fallbacks. The architecture's seriousness about reliability mirrors the product's seriousness about persistence. A flaky demo is a broken promise about a flaky product.
 
+### Science & honest split — what's built today vs vision
+
+Every pedagogical claim in this brief maps to either a shipped code path or a named roadmap item. The split below is the anti-grift move the one-pager cannot afford to skip; naming the vision items *as vision* is how the CPO knows the built items are built.
+
+| Cite | Built today | Vision |
+|---|---|---|
+| **Calibrated confidence** (Dunlosky, 2013) — the predictable dropout is the *confidently wrong* student, not the one who fails loudly. | Verification probe after every *"got it"*; mastery is gated on probe-correct **and** confidence ≠ guessing in [`handleQuizResponse`](../frontend/src/app/api/chat/route.ts). Dual-scoring (outcome + `intervention_cost`) lives on `learner_profiles`. | A Brier-score surface per student per concept; a *Confidently-Wrong* instructor list in the Watchlist that scores said-mastery-minus-observed-mastery and ranks the silent middle by that delta. |
+| **Spacing + cognitive load + interleaving** (Ebbinghaus; Sweller, 1988; Bjork's *desirable difficulties*) — the #1 qualitative dropout complaint is *"I don't know how to schedule this."* | Deterministic Planner in [`planner-agent.ts`](../frontend/src/lib/ai/planner-agent.ts): forgetting-curve-weighted review priority, 3-unit/day cognitive-load budget matched to Nexford's 12–15h band, deliberate interleaving across concepts within a session. | A weekly *reflect-agent* that reviews the last 7 days of adherence + probe outcomes and proposes load/spacing adjustments to the Planner — a human-reviewed compounding loop below the nightly Meta-Agent. |
+| **Transfer** (Barnett & Ceci, 2002; Bransford) — the employer-signal argument: a degree only pays if knowledge survives the context switch from classroom to job. | Hand-curated verification probes that restate the concept in a novel scenario (gym membership ↔ accrual timing, flight ticket ↔ matching principle) before mastery is marked. | LLM-generated far-transfer probes; a `near_mastery` / `far_mastery` split on the concept record; transfer-probe pass rate as a leading indicator of degree-value, not just course-completion. Roadmap *Holy grail* territory — [`Docs/ROADMAP.md`](./ROADMAP.md). |
+
+The honest summary: calibration and load are *built today* as architecture, not as dashboards; transfer is *built today* as pedagogy (the probe), not as a surface the CPO can click through. The dashboards and the far-transfer generator are next; they are not built.
+
 ---
 
 ## 4. Product Insight — the ROADMAP is the persistence playbook

@@ -8,9 +8,10 @@ import { Sparkles, X } from "lucide-react";
  * ProactiveNudge — banner that proves the system is forward-looking.
  *
  * Reads /api/journey/last-struggle (real signal from learner_profiles)
- * and falls back to a seeded "Depreciation" concept so the demo always
- * has something to show. Suppressed for the rest of the browser session
- * once dismissed via sessionStorage.
+ * and falls back to a seeded concept so the demo always has something
+ * to show. Dismiss (X / "Not now") hides the banner for the current
+ * render; a page reload always brings it back so the CPO demo is
+ * deterministic regardless of DEMO_MODE.
  *
  * Two variants:
  *   - default (used on /plan): full banner with the Yes/No CTA pair.
@@ -32,13 +33,6 @@ interface ProactiveNudgeProps {
   variant?: "default" | "compact";
 }
 
-// Bumped to v2 so any sessionStorage flags set under the original key
-// (which lingered across server restarts and silently suppressed the
-// nudge for the demo) are ignored. Scoped per variant so dismissing
-// the compact banner on /portal doesn't also kill the full banner on
-// /plan — each surface has its own opt-out.
-const DISMISS_KEY_BASE = "nx.nudge.dismissed.v2";
-
 export function ProactiveNudge({
   onAccept,
   variant = "default",
@@ -46,11 +40,9 @@ export function ProactiveNudge({
   const [data, setData] = useState<ProactiveNudgeResponse | null>(null);
   const [visible, setVisible] = useState(false);
   const [accepted, setAccepted] = useState(false);
-  const dismissKey = `${DISMISS_KEY_BASE}.${variant}`;
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    if (sessionStorage.getItem(dismissKey) === "1") return;
     let cancelled = false;
     fetch("/api/journey/last-struggle")
       .then((r) => r.json())
@@ -63,12 +55,9 @@ export function ProactiveNudge({
     return () => {
       cancelled = true;
     };
-  }, [dismissKey]);
+  }, []);
 
   function dismiss() {
-    if (typeof window !== "undefined") {
-      sessionStorage.setItem(dismissKey, "1");
-    }
     setVisible(false);
   }
 
@@ -112,7 +101,7 @@ export function ProactiveNudge({
                   compact ? "leading-none" : ""
                 }`}
               >
-                Socrates noticed something
+                From Socrates
               </p>
               <p
                 className={`text-[#0f0f0f] ${
@@ -123,13 +112,13 @@ export function ProactiveNudge({
               >
                 {accepted ? (
                   <>
-                    Got it — added a 5-minute {data.label} refresher to
-                    Monday&apos;s plan.
+                    Got it — added a {data.label} refresher to Monday&apos;s
+                    plan.
                   </>
                 ) : (
                   <>
                     {data.label} was challenging today. Want me to slot a
-                    5-minute review for next Monday so it stays warm?
+                    review for Monday so it stays warm?
                   </>
                 )}
               </p>
@@ -152,7 +141,7 @@ export function ProactiveNudge({
                       onClick={handleAccept}
                       className="rounded-full bg-[#0f0f0f] px-3.5 py-1.5 text-xs font-semibold text-[#ffb300] transition hover:bg-[#1f1f1f]"
                     >
-                      Yes, build it
+                      Schedule it
                     </button>
                   )}
                   <button

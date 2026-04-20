@@ -239,15 +239,39 @@ export default function PlanPage() {
   function injectReviewSlot(concept: string, label: string) {
     if (!plan) return;
     const next = structuredClone(plan) as WeekPlan;
-    const monday = next.days.find((d) => d.dayLabel === "Mon") ?? next.days[0];
-    if (!monday) return;
+    const monday = next.days.find((d) => d.dayLabel === "Mon");
+    if (!monday) {
+      toast.error("Could not find Monday in the current plan — skipped review slot.");
+      return;
+    }
+
+    // Pull-forward dedup: if the planner already scheduled a review for
+    // this concept elsewhere in the week, lift it out before we insert the
+    // Monday slot. One review per concept per week keeps the calendar
+    // honest and makes the Socrates nudge a "consolidate early" decision,
+    // not a duplicate.
+    let pulledForward = false;
+    for (const day of next.days) {
+      if (day.dayLabel === "Mon") continue;
+      const idx = day.slots.findIndex(
+        (s) => s.kind === "review" && s.concept === concept,
+      );
+      if (idx >= 0) {
+        const removed = day.slots.splice(idx, 1)[0];
+        day.totalLoad -= removed.load;
+        pulledForward = true;
+      }
+    }
+
     monday.slots.unshift({
       concept,
       conceptLabel: label,
       load: 1,
       durationMin: 5,
       kind: "review",
-      rationale: `Quick refresher you accepted from your home portal nudge — keeps ${label} warm before you hit the next module.`,
+      rationale: pulledForward
+        ? `Pulled this review forward from later in the week — Socrates caught ${label} shaky today, so we consolidate while the trace is fresh.`
+        : `Quick refresher you accepted from the Socrates nudge — keeps ${label} warm before the next module.`,
     });
     monday.totalLoad += 1;
     setPlan(normalizePlan(next));
@@ -269,7 +293,7 @@ export default function PlanPage() {
                 Your Week
               </h1>
               {plan && (
-                <p className="mt-1 text-sm text-[#6b7280]">
+                <p className="mt-1 max-w-2xl text-sm text-[#6b7280]">
                   Plan for the week of{" "}
                   {new Date(plan.weekStart).toLocaleDateString(undefined, {
                     month: "long",
@@ -279,24 +303,24 @@ export default function PlanPage() {
                 </p>
               )}
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex shrink-0 items-center gap-2">
               <button
                 onClick={importFromCanvas}
                 disabled={syncingCanvas}
                 title="Re-pull lectures and assignments via the LMSProvider. Mock today; the same call hits Canvas live once an API key is configured."
-                className="inline-flex items-center gap-1.5 rounded-full border border-[#fde047] bg-[#fefce8] px-3 py-1.5 text-[11px] font-medium text-[#854d0e] transition hover:bg-[#fef3c7] disabled:opacity-60"
+                className="inline-flex min-w-[180px] items-center justify-center gap-2 whitespace-nowrap rounded-full border border-[#fde047] bg-[#fefce8] px-4 py-2 text-sm font-medium text-[#854d0e] transition hover:bg-[#fef3c7] disabled:opacity-60"
               >
                 {syncingCanvas ? (
-                  <Loader2 className="h-3 w-3 animate-spin" />
+                  <Loader2 className="h-3.5 w-3.5 animate-spin" />
                 ) : (
-                  <RefreshCw className="h-3 w-3" />
+                  <RefreshCw className="h-3.5 w-3.5" />
                 )}
                 {syncingCanvas ? "Importing…" : "Import from Canvas"}
               </button>
               <button
                 onClick={fetchPlan}
                 disabled={loading}
-                className="rounded-full border border-[#e5e7eb] bg-white px-4 py-2 text-sm font-medium text-[#0f0f0f] transition hover:bg-[#f3f4f6] disabled:opacity-50"
+                className="whitespace-nowrap rounded-full border border-[#e5e7eb] bg-white px-4 py-2 text-sm font-medium text-[#0f0f0f] transition hover:bg-[#f3f4f6] disabled:opacity-50"
               >
                 {loading ? (
                   <span className="inline-flex items-center gap-2">
