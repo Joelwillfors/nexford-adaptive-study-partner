@@ -4,7 +4,7 @@ A production deploy of the prototype to Vercel takes ~5 minutes. The
 standalone UI in this repo is the proof of the [`HEADLESS_API.md`](Docs/HEADLESS_API.md)
 contracts; production lives inside Nexford's Canvas.
 
-**Demo mode:** [`vercel.json`](vercel.json) does **not** set `NEXT_PUBLIC_DEMO_MODE`. For **live** Mentor / Profiler / Supabase behaviour in Production, set the four variables below and **omit** `NEXT_PUBLIC_DEMO_MODE` (or set it to `false`). For a **flaky-demo** or offline rehearsal only, you can set `NEXT_PUBLIC_DEMO_MODE=true` in Vercel or in `frontend/.env.local` locally — see [`Docs/DEMO_SCRIPT.md`](Docs/DEMO_SCRIPT.md).
+**Demo mode:** [`vercel.json`](vercel.json) does **not** set `NEXT_PUBLIC_DEMO_MODE`. For **live** Mentor / Profiler / Supabase behaviour in Production, set the four variables below and **omit** `NEXT_PUBLIC_DEMO_MODE` (or set it to `false`). For a **flaky-demo** or offline rehearsal only, you can set `NEXT_PUBLIC_DEMO_MODE=true` in Vercel or in `frontend/.env.local` locally.
 
 ## Prerequisites
 

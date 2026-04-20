@@ -10,7 +10,7 @@ If you only have ten minutes, start with [`SUBMISSION.md`](SUBMISSION.md). For a
 
 | What | Why this exists |
 |---|---|
-| **Live prototype on Vercel** | *(paste your Production URL after [`DEPLOY.md`](DEPLOY.md))* — Live OpenAI + Supabase when env vars are set; optional `NEXT_PUBLIC_DEMO_MODE=true` only for deterministic fixtures (see [`Docs/DEMO_SCRIPT.md`](Docs/DEMO_SCRIPT.md)). |
+| **Live prototype on Vercel** | *(paste your Production URL after [`DEPLOY.md`](DEPLOY.md))* — Live OpenAI + Supabase when env vars are set; optional `NEXT_PUBLIC_DEMO_MODE=true` only for deterministic fixtures. |
 | **[Product brief (PDF)](Docs/PRODUCT_BRIEF_ONE_PAGER.pdf)** | The strategic motivation, the unit economics, the persistence thesis — printable / iPad. |
 | **Source code & API contracts (GitHub)** | *(paste repository URL after `git push`)* — Technical depth; headless API inventory in [`Docs/HEADLESS_API.md`](Docs/HEADLESS_API.md). |
 
@@ -28,7 +28,7 @@ Built in 48 hours for the assignment. The 48-hour build is the proof that the co
 
 ## Try the live demo
 
-The deploy runs **live** against OpenAI + Supabase when the production env vars from [`DEPLOY.md`](DEPLOY.md) are set; deterministic demo fixtures are available via the optional `NEXT_PUBLIC_DEMO_MODE=true` flag (see [`Docs/DEMO_SCRIPT.md`](Docs/DEMO_SCRIPT.md)). Identity is hardcoded to the seeded student (Sara Patel); all four cognitive functions wire up against a single seeded course (Business Fundamentals — accounting).
+The deploy runs **live** against OpenAI + Supabase when the production env vars from [`DEPLOY.md`](DEPLOY.md) are set; deterministic demo fixtures are available via the optional `NEXT_PUBLIC_DEMO_MODE=true` flag. Identity is hardcoded to the seeded student (Sara Patel); all four cognitive functions wire up against a single seeded course (Business Fundamentals — accounting).
 
 - **Deployed URL** — paste in the Command Center table above after you run [`DEPLOY.md`](DEPLOY.md). Production uses your Vercel env vars; demo fixtures are optional.
 - Toggle between the **Student** view (`/`, `/learn`, `/journey`, `/plan`) and the **Teacher** view (`/teacher`, `/teacher/watchlist`, `/teacher/student/[id]`) using the role pill in the top nav.
@@ -49,7 +49,6 @@ npm run dev                       # http://localhost:3000
 |---|---|
 | [`Docs/PRODUCT_BRIEF_ONE_PAGER.md`](Docs/PRODUCT_BRIEF_ONE_PAGER.md) | 90 seconds — the CPO memo (PDF: [`PRODUCT_BRIEF_ONE_PAGER.pdf`](Docs/PRODUCT_BRIEF_ONE_PAGER.pdf)). |
 | [`Docs/PRODUCT_BRIEF.md`](Docs/PRODUCT_BRIEF.md) | 10 minutes — the long form, six insights, honest gaps, Profiler eval table. |
-| [`Docs/DEMO_SCRIPT.md`](Docs/DEMO_SCRIPT.md) | The stage script for the live walkthrough. |
 | [`Docs/HEADLESS_API.md`](Docs/HEADLESS_API.md) | The contracts Canvas would consume — same JSON, two clients. |
 | [`Docs/ROADMAP.md`](Docs/ROADMAP.md) | What's shipped, what's next, what's explicitly out of scope. |
 | [`Docs/README.md`](Docs/README.md) | Engineering-side internal overview (architecture, file layout, dev notes). |

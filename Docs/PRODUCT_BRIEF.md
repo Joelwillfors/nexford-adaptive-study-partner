@@ -2,7 +2,7 @@
 
 *The intelligence layer that docks into Nexford's Canvas to win the persistence war.*
 
-*Submitted as Part 3 of the Nexford AI Product Specialist assignment. Companion to the live prototype, [`Docs/DEMO_SCRIPT.md`](./DEMO_SCRIPT.md), and the engineering archive in [`Docs/ROADMAP.md`](./ROADMAP.md).*
+*Submitted as Part 3 of the Nexford AI Product Specialist assignment. Companion to the live prototype and the engineering archive in [`Docs/ROADMAP.md`](./ROADMAP.md).*
 
 ---
 
@@ -223,4 +223,4 @@ And the system, embedded in the **Canvas** the student already opens for **cours
 
 Each item is sized for a single PM-engineer pair. Each one moves a different lever in the dropout funnel. Together they're the first quarter of the persistence playbook the rest of [`Docs/ROADMAP.md`](./ROADMAP.md) extends.
 
-The demo is the product, not the docs. See [`Docs/DEMO_SCRIPT.md`](./DEMO_SCRIPT.md).
+The demo is the product, not the docs.

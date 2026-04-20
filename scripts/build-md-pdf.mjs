@@ -1,6 +1,6 @@
 /**
  * Generic Markdown → PDF using the same md-to-pdf + stylesheet stack as the one-pager.
- * Usage: node scripts/build-md-pdf.mjs --in Docs/DEMO_SCRIPT.md --out Docs/DEMO_SCRIPT.pdf
+ * Usage: node scripts/build-md-pdf.mjs --in Docs/.archive/DEMO_SCRIPT.md --out Docs/.archive/DEMO_SCRIPT.pdf
  * Paths are relative to the repo root.
  */
 import { existsSync } from "node:fs";

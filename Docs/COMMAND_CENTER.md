@@ -16,7 +16,6 @@ Use this page when you need **one place** that points to the right artefact. Rep
 | [`../SUBMISSION.md`](../SUBMISSION.md) | Reviewer cover sheet — three artefacts, rubric crosswalk. |
 | [`PRODUCT_BRIEF_ONE_PAGER.md`](./PRODUCT_BRIEF_ONE_PAGER.md) · [PDF](./PRODUCT_BRIEF_ONE_PAGER.pdf) | 90-second CPO memo. |
 | [`PRODUCT_BRIEF.md`](./PRODUCT_BRIEF.md) | Long-form brief, insights, honest gaps, Profiler eval. |
-| [`DEMO_SCRIPT.md`](./DEMO_SCRIPT.md) | Live walkthrough script and rehearsal checklist. |
 | [`HEADLESS_API.md`](./HEADLESS_API.md) | HTTP JSON contracts for a Canvas embed. |
 | [`ROADMAP.md`](./ROADMAP.md) | Shipped / next / non-goals. |
 | [`README.md`](./README.md) | Engineering overview — where code lives. |

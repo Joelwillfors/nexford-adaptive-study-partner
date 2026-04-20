@@ -6,13 +6,13 @@
 
 | What | Why this exists |
 |---|---|
-| **Live prototype on Vercel** | *(paste deployed URL after [`DEPLOY.md`](DEPLOY.md))* — Live stack when Production env vars are set; optional demo fixtures via `NEXT_PUBLIC_DEMO_MODE` (see [`Docs/DEMO_SCRIPT.md`](Docs/DEMO_SCRIPT.md)). |
+| **Live prototype on Vercel** | *(paste deployed URL after [`DEPLOY.md`](DEPLOY.md))* — Live stack when Production env vars are set; optional demo fixtures via `NEXT_PUBLIC_DEMO_MODE`. |
 | **[Product brief (PDF)](Docs/PRODUCT_BRIEF_ONE_PAGER.pdf)** | The strategic motivation, the unit economics, the persistence thesis — printable / iPad. |
 | **Source code & API contracts (GitHub)** | *(paste repository URL after push)* — Technical depth; headless API inventory in [`Docs/HEADLESS_API.md`](Docs/HEADLESS_API.md). |
 
 Full doc map: [`Docs/COMMAND_CENTER.md`](Docs/COMMAND_CENTER.md).
 
-*Long-form brief: [`Docs/PRODUCT_BRIEF.md`](Docs/PRODUCT_BRIEF.md). Demo script: [`Docs/DEMO_SCRIPT.md`](Docs/DEMO_SCRIPT.md). One-pager source (Markdown): [`Docs/PRODUCT_BRIEF_ONE_PAGER.md`](Docs/PRODUCT_BRIEF_ONE_PAGER.md).*
+*Long-form brief: [`Docs/PRODUCT_BRIEF.md`](Docs/PRODUCT_BRIEF.md). One-pager source (Markdown): [`Docs/PRODUCT_BRIEF_ONE_PAGER.md`](Docs/PRODUCT_BRIEF_ONE_PAGER.md).*
 
 ---
 
@@ -22,9 +22,7 @@ This page is the reviewer's map. Three artefacts, one read order, one rubric cro
 
 ## The three artefacts, in read order
 
-1. **The live demo** — *(paste deployed URL here after running [`DEPLOY.md`](DEPLOY.md))*. With Production env vars, the app uses live OpenAI + Supabase; the role pill in the top nav toggles between Student and Teacher.
-   - **Three-minute backup video walkthrough:** *(paste URL after recording the "Backup video — 3-minute submission cut" script in [`Docs/DEMO_SCRIPT.md`](Docs/DEMO_SCRIPT.md))*. Same persistence spine, compressed for evaluators short on time.
-   - **Full 10-minute live script** lives in [`Docs/DEMO_SCRIPT.md`](Docs/DEMO_SCRIPT.md).
+1. **The live demo** — *(paste deployed URL here after running [`DEPLOY.md`](DEPLOY.md))*. With Production env vars, the app uses live OpenAI + Supabase; the role pill in the top nav toggles between Student and Teacher. A three-minute backup video walkthrough is available on request for the async-review path.
 2. **The one-pager** — [`Docs/PRODUCT_BRIEF_ONE_PAGER.md`](Docs/PRODUCT_BRIEF_ONE_PAGER.md) (also available as PDF: [`Docs/PRODUCT_BRIEF_ONE_PAGER.pdf`](Docs/PRODUCT_BRIEF_ONE_PAGER.pdf)). 90-second CPO memo with the persistence thesis, the four cognitive functions, the four highest-leverage decisions, the four insights, and the Canvas-embed production diagram. **~2 min.**
 3. **The long-form brief** — [`Docs/PRODUCT_BRIEF.md`](Docs/PRODUCT_BRIEF.md). Full Problem & User → Why AI → What I built → What I learned, with the Fermi cohort-economics derivation, **six named insights** (Calibration story, Ambition reduction, the mid-build pivot, the original three), the Honest gaps section with the cut-conviction line and the *what-you-will-not-see* disclosure, the **Profiler eval (n=20)** table with measured 90 / 55 / 70 numbers, and a **Day 1 if hired** 60-day shipping plan. **~5 min.**
 

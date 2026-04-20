@@ -42,7 +42,6 @@ Migrations are applied via `supabase db push` from the repo root after `supabase
 
 - [`Docs/PRODUCT_BRIEF.md`](./PRODUCT_BRIEF.md) — Long-form product brief (assignment Part 3): Problem, Why AI, What was built, Product Insight, Honest Gaps.
 - [`Docs/PRODUCT_BRIEF_ONE_PAGER.md`](./PRODUCT_BRIEF_ONE_PAGER.md) — 90-second CPO memo version of the brief.
-- [`Docs/DEMO_SCRIPT.md`](./DEMO_SCRIPT.md) — Stage script and rehearsal checklist for the live demo (assignment Part 4).
 - [`Docs/ROADMAP.md`](./ROADMAP.md) — Currently shipped, next sprint, six-month horizon, holy grail, explicit non-goals. The archive of restraint.
 - [`Docs/HEADLESS_API.md`](./HEADLESS_API.md) — The contracts Canvas would consume. Same JSON, two clients (the standalone UI in this repo, and Canvas in production).
 
