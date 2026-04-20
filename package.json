@@ -1,0 +1,15 @@
+{
+  "name": "nexford-docs-tooling",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "build:onepager-pdf": "node scripts/build-onepager-pdf.mjs",
+    "build:demo-pdf": "node scripts/build-md-pdf.mjs --in Docs/DEMO_SCRIPT.md --out Docs/DEMO_SCRIPT.pdf",
+    "build:interview-prep-pdf": "node scripts/build-md-pdf.mjs --in Docs/.archive/INTERVIEW_PREP.md --out Docs/.archive/INTERVIEW_PREP.pdf",
+    "build:extra-pdfs": "npm run build:demo-pdf && npm run build:interview-prep-pdf"
+  },
+  "devDependencies": {
+    "@mermaid-js/mermaid-cli": "^11.4.2",
+    "md-to-pdf": "^5.2.4"
+  }
+}

@@ -1,0 +1,16 @@
+# Hidden archive of pre-build / off-project / personal-portfolio docs.
+# Kept locally for history; never pushed to GitHub.
+Docs/.archive/
+
+# Root-level doc tooling (md-to-pdf, mermaid-cli)
+node_modules/
+
+# Transient PDF build artifacts (also deleted after a successful build)
+Docs/.onepager-pdf-tmp/
+
+# Supabase CLI local link cache (do not commit project ref / pooler URLs)
+supabase/.temp/
+
+# macOS junk
+.DS_Store
+**/.DS_Store

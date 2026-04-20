@@ -1,0 +1,156 @@
+{
+  "$schema": "Each example: studentQuestion + mentorResponse the Profiler would see, plus expected fields the eval scorer compares against. Concept tags are canonical (see frontend/src/lib/ai/concept-canon.ts). Some examples are legitimately ambiguous between two canonical siblings (e.g. the gym/timing question maps to BOTH accrual_vs_cash AND revenue_recognition); those use expectedConceptTags (array) and the scorer counts a hit if any listed tag matches. Single-tag examples keep expectedConceptTag (string) and remain strict. Misconception types are coarse buckets — the scorer counts a hit when ≥2 content tokens (length ≥4) from the labeled phrase appear anywhere in the Profiler's misconception+bottleneck text.",
+  "examples": [
+    {
+      "id": "accrual-1",
+      "studentQuestion": "Wait, the gym got the $1,200 in January. Isn't that January's revenue?",
+      "mentorResponse": "Let me push back gently — what triggers revenue under accrual accounting: when the cash arrives, or when the service is delivered?",
+      "expectedConceptTags": ["accrual_vs_cash", "revenue_recognition"],
+      "expectedMisconceptionType": "cash-basis confusion",
+      "expectedReasoningStep": 1
+    },
+    {
+      "id": "accrual-2",
+      "studentQuestion": "So if I run a consulting firm and bill in December but get paid in January, that's December revenue?",
+      "mentorResponse": "Exactly — you've got the timing trigger. Now what would the matching principle say about the costs you incurred to deliver that work?",
+      "expectedConceptTags": ["accrual_vs_cash", "revenue_recognition"],
+      "expectedLevel": "strong"
+    },
+    {
+      "id": "matching-1",
+      "studentQuestion": "Why would I expense the salesperson's commission in March if the deal closed in January?",
+      "mentorResponse": "Walk me through it — what was the commission *for*, and which month earned the revenue it generated?",
+      "expectedConceptTags": ["matching_principle", "expense_recognition"],
+      "expectedMisconceptionType": "treating cost as period-of-payment rather than period-of-benefit",
+      "expectedReasoningStep": 2
+    },
+    {
+      "id": "matching-2",
+      "studentQuestion": "Got it — the cost rides with the revenue it produced, not when it was paid.",
+      "mentorResponse": "Good. To check that with a fresh case: a factory pays its electricity bill in February for power consumed in January. Which month does the expense belong to?",
+      "expectedConceptTags": ["matching_principle", "expense_recognition"],
+      "expectedLevel": "strong"
+    },
+    {
+      "id": "prepaid-1",
+      "studentQuestion": "If I pay $12K for a year of insurance in January, isn't that all a January expense?",
+      "mentorResponse": "If the insurance protects the whole year, what does the matching principle say about how much has been *used up* in January?",
+      "expectedConceptTags": ["prepaid_expenses", "matching_principle", "expense_recognition"],
+      "expectedMisconceptionType": "expensing the full prepaid asset on payment date",
+      "expectedReasoningStep": 2
+    },
+    {
+      "id": "prepaid-2",
+      "studentQuestion": "OK so January expenses $1,000, and the other $11,000 sits as a prepaid asset?",
+      "mentorResponse": "Exactly. And what happens to that asset balance month after month?",
+      "expectedConceptTags": ["prepaid_expenses", "prepaid_assets"],
+      "expectedLevel": "strong"
+    },
+    {
+      "id": "revenue-1",
+      "studentQuestion": "The gym got $1,200 today for a 12-month membership. Why isn't that all revenue today?",
+      "mentorResponse": "Take it slowly — what does the gym actually owe in exchange for that $1,200?",
+      "expectedConceptTag": "revenue_recognition",
+      "expectedMisconceptionType": "confusing cash receipt with earned revenue",
+      "expectedReasoningStep": 1
+    },
+    {
+      "id": "revenue-2",
+      "studentQuestion": "So $100 a month for 12 months, and the rest is a liability called unearned revenue?",
+      "mentorResponse": "Right. Now show me the journal entry on day one.",
+      "expectedConceptTag": "revenue_recognition",
+      "expectedLevel": "strong"
+    },
+    {
+      "id": "expense-1",
+      "studentQuestion": "Why does the rent expense show in March if I prepaid all of Q1 in January?",
+      "mentorResponse": "Think about *consumed* vs *paid*. Which one drives the expense recognition?",
+      "expectedConceptTag": "expense_recognition",
+      "expectedMisconceptionType": "expense recognition based on cash timing rather than consumption",
+      "expectedReasoningStep": 1
+    },
+    {
+      "id": "expense-2",
+      "studentQuestion": "I think I get it — I expense one third of the prepayment each month as the benefit is consumed.",
+      "mentorResponse": "Good. And what's left on the balance sheet after month one?",
+      "expectedConceptTags": ["expense_recognition", "prepaid_expenses", "prepayment_expensing"],
+      "expectedLevel": "strong"
+    },
+    {
+      "id": "equation-1",
+      "studentQuestion": "If the company borrows $10K, do assets and equity both go up?",
+      "mentorResponse": "Pause on that — borrowing means the company *owes* someone. Which side of the equation does that land on?",
+      "expectedConceptTag": "accounting_equation",
+      "expectedMisconceptionType": "conflating liabilities with equity",
+      "expectedReasoningStep": 2
+    },
+    {
+      "id": "equation-2",
+      "studentQuestion": "Right — assets up, liabilities up, equity unchanged.",
+      "mentorResponse": "Exactly. Walk me through what happens when the company repays $2K of that loan.",
+      "expectedConceptTags": ["accounting_equation", "loan_repayment_effects"],
+      "expectedLevel": "strong"
+    },
+    {
+      "id": "depreciation-1",
+      "studentQuestion": "We bought a $50K truck. Why don't we just expense $50K this year?",
+      "mentorResponse": "How long do you expect that truck to be doing work for the business?",
+      "expectedConceptTags": ["depreciation", "capital_expenditure_vs_operating_expense"],
+      "expectedMisconceptionType": "expensing capitalized asset in year of purchase",
+      "expectedReasoningStep": 1
+    },
+    {
+      "id": "depreciation-2",
+      "studentQuestion": "So if it's useful for 5 years, $10K a year as depreciation expense.",
+      "mentorResponse": "Right. And how does that show up on the balance sheet?",
+      "expectedConceptTags": ["depreciation", "depreciation_expense"],
+      "expectedLevel": "strong"
+    },
+    {
+      "id": "asset-1",
+      "studentQuestion": "Is a one-year service contract we just signed an asset?",
+      "mentorResponse": "What's the test for an asset — has the company already given something up to receive a future benefit?",
+      "expectedConceptTag": "asset",
+      "expectedMisconceptionType": "treating contractual rights as recognized assets without past consideration",
+      "expectedReasoningStep": 1
+    },
+    {
+      "id": "wacc-1",
+      "studentQuestion": "Why would a company with cheap debt still have a high WACC?",
+      "mentorResponse": "Walk me through the formula — what else feeds into WACC besides the cost of debt?",
+      "expectedConceptTag": "wacc",
+      "expectedMisconceptionType": "treating WACC as the cost of debt only, ignoring equity weighting",
+      "expectedReasoningStep": 2
+    },
+    {
+      "id": "cac-1",
+      "studentQuestion": "Our CAC is just total ad spend divided by new customers, right?",
+      "mentorResponse": "Hmm — what about the salaries of the sales team and the tooling you use to run the funnel?",
+      "expectedConceptTag": "customer_acquisition_cost",
+      "expectedMisconceptionType": "equating acquisition cost with ad spend only, excluding overhead",
+      "expectedReasoningStep": 3
+    },
+    {
+      "id": "cac-2",
+      "studentQuestion": "So fully loaded — ads + sales salaries + tooling + commissions, divided by net new customers acquired in the period.",
+      "mentorResponse": "Exactly. What does that change about how you compare CAC to LTV?",
+      "expectedConceptTag": "customer_acquisition_cost",
+      "expectedLevel": "strong"
+    },
+    {
+      "id": "ltv-1",
+      "studentQuestion": "If a customer pays $50/month, isn't LTV just $50 times however many months they stay?",
+      "mentorResponse": "What about the cost to actually serve them — does the gross margin matter to LTV?",
+      "expectedConceptTag": "lifetime_value",
+      "expectedMisconceptionType": "computing LTV on revenue, not gross margin",
+      "expectedReasoningStep": 2
+    },
+    {
+      "id": "ltv-2",
+      "studentQuestion": "OK so LTV = (ARPU × gross margin %) / churn. And then I compare that to CAC.",
+      "mentorResponse": "Right. And what LTV-to-CAC ratio would tell you the business is healthy?",
+      "expectedConceptTag": "lifetime_value",
+      "expectedLevel": "strong"
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+/* ── Nexford Design System ──────────────────────────────────────────── */
+
+@theme inline {
+  /* Brand — Yellow/Mustard (CTAs and accents only) */
+  --color-brand: #ffb300;
+  --color-brand-dark: #e6a200;
+
+  /* Ink — Black scale */
+  --color-ink: #0f0f0f;
+  --color-ink-secondary: #6b7280;
+
+  /* Surface — Light gray backgrounds */
+  --color-surface: #f9fafb;
+  --color-surface-raised: #f3f4f6;
+
+  /* Border */
+  --color-border: #e5e7eb;
+
+  /* Semantic */
+  --color-mentor-bg: #f9fafb;
+  --color-mentor-border: #e5e7eb;
+  --color-alert-bg: #fefce8;
+  --color-alert-border: #fde047;
+
+  /* Font */
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+body {
+  background: #ffffff;
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
+
+/* Dot pattern background */
+.dot-bg {
+  background-color: #ffffff;
+  background-image: radial-gradient(circle, #d1d5db 1px, transparent 1px);
+  background-size: 22px 22px;
+}
