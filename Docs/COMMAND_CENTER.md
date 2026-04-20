@@ -7,6 +7,8 @@ Use this page when you need **one place** that points to the right artefact. Rep
 | **Live app (Vercel)** | `https://YOUR-PRODUCTION-URL.vercel.app` — replace with your Production deployment URL. |
 | **Source (GitHub)** | `https://github.com/YOUR_USER/YOUR_REPO` — replace after first push. |
 
+**First push** (after creating an empty repo on GitHub): from the repo root, `git remote add origin https://github.com/YOUR_USER/YOUR_REPO.git` then `git push -u origin main`.
+
 ## Read order & roles
 
 | Document | When to open it |
