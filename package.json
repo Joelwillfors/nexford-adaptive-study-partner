@@ -8,7 +8,8 @@
     "build:public-pdfs": "npm run build:onepager-pdf && npm run build:command-center-pdf",
     "build:demo-pdf": "node scripts/build-md-pdf.mjs --in Docs/.archive/DEMO_SCRIPT.md --out Docs/.archive/DEMO_SCRIPT.pdf",
     "build:interview-prep-pdf": "node scripts/build-md-pdf.mjs --in Docs/.archive/INTERVIEW_PREP.md --out Docs/.archive/INTERVIEW_PREP.pdf",
-    "build:extra-pdfs": "npm run build:demo-pdf && npm run build:interview-prep-pdf"
+    "build:cue-card-pdf": "node scripts/build-md-pdf.mjs --in Docs/.archive/DEMO_CUE_CARD.md --out Docs/.archive/DEMO_CUE_CARD.pdf --format A5 --margin 0.4in",
+    "build:extra-pdfs": "npm run build:demo-pdf && npm run build:interview-prep-pdf && npm run build:cue-card-pdf"
   },
   "devDependencies": {
     "@mermaid-js/mermaid-cli": "^11.4.2",

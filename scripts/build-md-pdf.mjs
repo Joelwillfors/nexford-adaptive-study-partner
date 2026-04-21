@@ -15,21 +15,27 @@ const stylesheet = path.join(repoRoot, "scripts", "onepager-pdf.css");
 function parseArgs(argv) {
   let input;
   let output;
+  let format = "A4";
+  let margin = "0.75in";
   for (let i = 2; i < argv.length; i++) {
     if (argv[i] === "--in" && argv[i + 1]) {
       input = argv[++i];
     } else if (argv[i] === "--out" && argv[i + 1]) {
       output = argv[++i];
+    } else if (argv[i] === "--format" && argv[i + 1]) {
+      format = argv[++i];
+    } else if (argv[i] === "--margin" && argv[i + 1]) {
+      margin = argv[++i];
     }
   }
-  return { input, output };
+  return { input, output, format, margin };
 }
 
 async function main() {
-  const { input, output } = parseArgs(process.argv);
+  const { input, output, format, margin } = parseArgs(process.argv);
   if (!input || !output) {
     console.error(
-      "Usage: node scripts/build-md-pdf.mjs --in <path.md> --out <path.pdf>",
+      "Usage: node scripts/build-md-pdf.mjs --in <path.md> --out <path.pdf> [--format A4|A5] [--margin 0.5in]",
     );
     process.exitCode = 1;
     return;
@@ -54,8 +60,8 @@ async function main() {
       dest: outPath,
       stylesheet: [stylesheet],
       pdf_options: {
-        format: "A4",
-        margin: "0.75in",
+        format,
+        margin,
         printBackground: true,
       },
     },

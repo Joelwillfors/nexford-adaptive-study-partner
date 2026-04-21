@@ -14,6 +14,8 @@ This roadmap doubles as the **archive of restraint**: every meaningful idea the 
 - **Tier 3 — Holy grail** — the ambitions that justify the platform's existence at year three, but should never be pitched as "Q2 deliverables."
 - **Explicit non-goals** — what we have *deliberately* chosen not to build, and why. This section exists because the strongest signal of product judgment is what you cut.
 
+> **Companion doc:** for "how does this scale to 10,000 students?" see [`SCALING.md`](./SCALING.md) — workload profile, four operational levers, predicted order of failure, and where the architectural ceiling actually is.
+
 ---
 
 ## Currently shipped (v0.4)
@@ -29,6 +31,22 @@ This roadmap doubles as the **archive of restraint**: every meaningful idea the 
 | **Monday Morning Planner** | Deterministic 7-day study plan: forgetting-curve priority + greedy fill against a 3-unit daily cognitive-load budget + interleaving swap pass. | [`frontend/src/lib/ai/planner-agent.ts`](../frontend/src/lib/ai/planner-agent.ts), [`frontend/src/app/plan/page.tsx`](../frontend/src/app/plan/page.tsx) |
 | **Document ingestion pipeline** | Async PDF → overlap-aware chunking → batch embeddings → pgvector. 202 Accepted with task queue. | [`frontend/src/lib/ai/ingest-pipeline.ts`](../frontend/src/lib/ai/ingest-pipeline.ts) |
 | **Demo-mode flag + cached fallback** | `NEXT_PUBLIC_DEMO_MODE` returns deterministic seed data so the demo cannot fail on cold-start or rate-limit. | `frontend/src/lib/flags.ts` |
+
+---
+
+## P1 Fix-Forward — Socratic Mentor (observed 2026-04-20)
+
+Five issues surfaced during pre-demo rehearsal. None block the demo — every one has a known work-around that the [demo script](./.archive/DEMO_SCRIPT.md) already routes around — but each is an honest engineering debt the next sprint closes. Tagged P1 because they all touch the hero surface (the Mentor) and none take longer than a day to land.
+
+| # | Symptom | Root cause | Fix direction | Effort |
+|---|---|---|---|---|
+| 1 | **Prompt-loop on unexpected answer format.** Student answers a turn-check with `1/5` (mathematically correct); Mentor re-emits the identical prior block. | Rigid template matching on the Socratic turn-check — the expected-answer classifier is string-literal rather than semantic. | Loosen the matcher to accept numerical equivalents (`1/5`, `20%`, `one fifth`) via a small normalization pass before the turn-check LLM call; fall back to an explicit "I heard X, is that what you meant?" probe on ambiguity. | S (~0.5d) |
+| 2 | **`Break it down` = noun-swap only.** Clicking *Break it down* replaces the example noun ("consulting firm" → "bakery") but keeps the academic sentence structure. | The regeneration prompt says *"give another example"* rather than *"lower the reading level"*. The model interprets literally. | Explicit reading-level prompt (*"explain this as if to a 12-year-old, short sentences, no jargon"*) + 2–3 few-shot examples showing the register shift. | S (~0.5d) |
+| 3 | **Topic abandonment after concept-tag switch.** Mentor correctly pivots `Accrual` → `Depreciation` when the student's question requires it, but never returns to the parent concept once the side-track closes. | No topic stack / state machine. The concept-tag re-tag is fire-and-forget; the parent concept is lost. | Push the original concept onto a session-scoped stack when the Mentor re-tags; auto-pop with a bridge line ("Ready to come back to Accrual vs Cash?") when the side-topic's Victory-Lap probe succeeds. | M (~1–1.5d) |
+| 4 | **Reset button doesn't propagate to UI without hard refresh.** The reset endpoint clears the DB session, but the chat UI sometimes renders stale messages until manual F5. | React client-side state is not invalidated on reset response — the `messages` array in `frontend/src/app/chat/page.tsx` holds onto the pre-reset optimistic state. | On successful reset response: clear local state, call `router.refresh()`, and show a "Session cleared" toast so the user sees what happened. | S (~0.5d) |
+| 5 | **Nudge topic drift vs. current module.** Nudge toast recommends review of `Accounting Equation` while student is actively in `Accrual vs Cash`. | Demo seed data hard-codes the nudge target rather than deriving it from the Profiler's most-recent "tricky step" signals. | Wire the nudge target to `SELECT concept_id FROM profile_entries WHERE student_id = ? AND kind = 'tricky_step' ORDER BY created_at DESC LIMIT 1` with a freshness window. Fall back to seed only if Profiler has no recent signal. | M (~1d) |
+
+**Total fix-forward budget: ~4 engineering days**, sequenceable behind the Tier 1 sprint below. Items 3 and 5 are the two that most visibly improve perceived pedagogy; items 1, 2, and 4 are paper cuts the demo can route around but that a real cohort cannot.
 
 ---
 

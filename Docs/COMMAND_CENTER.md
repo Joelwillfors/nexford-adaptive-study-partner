@@ -19,7 +19,8 @@
 | [`PRODUCT_BRIEF_ONE_PAGER.md`](https://github.com/Joelwillfors/nexford-adaptive-study-partner/blob/main/Docs/PRODUCT_BRIEF_ONE_PAGER.md) · [PDF](https://github.com/Joelwillfors/nexford-adaptive-study-partner/blob/main/Docs/PRODUCT_BRIEF_ONE_PAGER.pdf) | 90-second CPO memo — persistence thesis, four cognitive functions, four decisions, four insights, Canvas-embed diagram. | 2 min |
 | [`PRODUCT_BRIEF.md`](https://github.com/Joelwillfors/nexford-adaptive-study-partner/blob/main/Docs/PRODUCT_BRIEF.md) | Long-form brief — six insights, honest gaps, Profiler eval (n=20), Day 1 if hired. | 5 min |
 | [`HEADLESS_API.md`](https://github.com/Joelwillfors/nexford-adaptive-study-partner/blob/main/Docs/HEADLESS_API.md) | HTTP + JSON contracts Canvas would consume. Same JSON, two clients. | 3 min |
-| [`ROADMAP.md`](https://github.com/Joelwillfors/nexford-adaptive-study-partner/blob/main/Docs/ROADMAP.md) | Shipped / next / explicit non-goals / Tier-3 Adaptive Meta-Agent. | 2 min |
+| [`ROADMAP.md`](https://github.com/Joelwillfors/nexford-adaptive-study-partner/blob/main/Docs/ROADMAP.md) | Shipped / next / explicit non-goals / Tier-3 Adaptive Meta-Agent. Includes the P1 Fix-Forward Mentor backlog. | 2 min |
+| [`SCALING.md`](https://github.com/Joelwillfors/nexford-adaptive-study-partner/blob/main/Docs/SCALING.md) | Operational readiness at 10k students — workload profile, four levers, order of failure, architectural ceiling. | 3 min |
 | [`README.md`](https://github.com/Joelwillfors/nexford-adaptive-study-partner/blob/main/README.md) | Repo overview — code layout, local dev, env setup. | 2 min |
 
 ## Deploy & operations
