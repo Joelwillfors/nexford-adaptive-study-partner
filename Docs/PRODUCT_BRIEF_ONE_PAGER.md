@@ -76,7 +76,7 @@ Production isn't a destination site — it's an **intelligence layer on the page
 
 **Right after the embed lands — Automated Remediation auto-trigger:** Atlas's `add_remediation` plus the Profiler's bottleneck flags is two API calls and a cron job from the first *compounding* persistence loop in the system.
 
-**On the horizon — the Adaptive Meta-Agent (Tier 3, [`Docs/ROADMAP.md`](https://github.com/Joelwillfors/nexford-adaptive-study-partner/blob/main/Docs/ROADMAP.md)):** a nightly job that A/B tests Mentor metaphors, learns which framings retain students, and updates the system prompt with the winners. The system that gets better at retaining students every night, without a human in the loop. This is the destination AI is taking us toward, and it is roadmap — never a Q2 commitment.
+**On the horizon — the Adaptive Meta-Agent (Tier 3, [`Docs/ROADMAP.md`](https://github.com/Joelwillfors/nexford-adaptive-study-partner/blob/main/Docs/ROADMAP.md)):** a nightly job that A/B tests Mentor metaphors, learns which framings retain students, and updates the system prompt with the winners. The system that gets better at retaining students every night, without a human in the loop.
 
 ## Closing
 
