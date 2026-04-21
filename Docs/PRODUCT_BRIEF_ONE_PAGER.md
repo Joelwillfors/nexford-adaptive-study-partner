@@ -38,7 +38,7 @@ Nexford's pedagogy — *"we don't hand you answers"* — is the Mentor's system 
 
 The four highest-leverage decisions, all justified as persistence calls:
 
-1. **Asymmetry of friction.** Chat-in / `.ics`-out. Maintaining a second calendar is the first dropout reason; live OAuth on stage is the worst-possible demo failure mode.
+1. **Asymmetry of friction.** Natural-language in, deterministic calendar-write out. In production the target is Canvas's own calendar (via LTI), not a live-OAuth'd Google/Outlook — `.ics` is the escape hatch for personal calendars. Maintaining a second calendar is the first dropout reason, and every external-OAuth calendar integration eventually breaks; we refused to build the dropout trap.
 2. **`LMSProvider` mock + stub instead of fake Canvas.** *Send Review* writes idempotently to a real `gradebook_exports` table — same demo time as a fake button, three times the credibility.
 3. **Watchlist 4-level drilldown.** Row → factor breakdown → all weak concepts → concept page or full student profile. Catches the silent middle this week.
 4. **Mode switching as RAG escape hatch.** After 3 *I-don't-know* or 2 wrong answers, Socrates flips into Direct Instruction — permitted to invent novel analogies (Accrued Revenue ≈ a gym membership) the syllabus doesn't contain. Knowing when to relax a technical constraint in favor of human pedagogy is the AI product judgment most builds get wrong.
