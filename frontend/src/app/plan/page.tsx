@@ -232,27 +232,27 @@ export default function PlanPage() {
   }
 
   /**
-   * Insert a 5-minute review slot for the given concept on next Monday.
+   * Insert a 5-minute review slot for the given concept on Thursday.
    * Used by the proactive nudge "Yes, build it" CTA so the demo can
    * physically show the reviewer landing in the planner.
    */
   function injectReviewSlot(concept: string, label: string) {
     if (!plan) return;
     const next = structuredClone(plan) as WeekPlan;
-    const monday = next.days.find((d) => d.dayLabel === "Mon");
-    if (!monday) {
-      toast.error("Could not find Monday in the current plan — skipped review slot.");
+    const thursday = next.days.find((d) => d.dayLabel === "Thu");
+    if (!thursday) {
+      toast.error("Could not find Thursday in the current plan — skipped review slot.");
       return;
     }
 
     // Pull-forward dedup: if the planner already scheduled a review for
     // this concept elsewhere in the week, lift it out before we insert the
-    // Monday slot. One review per concept per week keeps the calendar
+    // Thursday slot. One review per concept per week keeps the calendar
     // honest and makes the Socrates nudge a "consolidate early" decision,
     // not a duplicate.
     let pulledForward = false;
     for (const day of next.days) {
-      if (day.dayLabel === "Mon") continue;
+      if (day.dayLabel === "Thu") continue;
       const idx = day.slots.findIndex(
         (s) => s.kind === "review" && s.concept === concept,
       );
@@ -263,7 +263,7 @@ export default function PlanPage() {
       }
     }
 
-    monday.slots.unshift({
+    thursday.slots.unshift({
       concept,
       conceptLabel: label,
       load: 1,
@@ -273,7 +273,7 @@ export default function PlanPage() {
         ? `Pulled this review forward from later in the week — Socrates caught ${label} shaky today, so we consolidate while the trace is fresh.`
         : `Quick refresher you accepted from the Socrates nudge — keeps ${label} warm before the next module.`,
     });
-    monday.totalLoad += 1;
+    thursday.totalLoad += 1;
     setPlan(normalizePlan(next));
   }
 
