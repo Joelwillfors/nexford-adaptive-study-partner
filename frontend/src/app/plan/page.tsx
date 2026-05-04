@@ -233,33 +233,31 @@ export default function PlanPage() {
 
   /**
    * Insert a 5-minute review slot for the given concept on Thursday.
-   * Used by the proactive nudge "Schedule it" CTA so the demo can
+   * Used by the proactive nudge "Yes, build it" CTA so the demo can
    * physically show the reviewer landing in the planner.
-   * Strips every existing slot for that concept across the week first
-   * (any kind — review, stretch, …) so planner output does not leave a
-   * duplicate on another day.
    */
   function injectReviewSlot(concept: string, label: string) {
     if (!plan) return;
     const next = structuredClone(plan) as WeekPlan;
-    // `weekTotalMin` is optional to re-derive; if we keep a cached value,
-    // normalizePlan would trust it and the band header drifts after edits.
-    delete (next as { weekTotalMin?: number }).weekTotalMin;
     const thursday = next.days.find((d) => d.dayLabel === "Thu");
     if (!thursday) {
       toast.error("Could not find Thursday in the current plan — skipped review slot.");
       return;
     }
 
-    // Remove every slot for this concept on every day (review, stretch,
-    // practice, etc.). The greedy planner often places *strong* concepts
-    // as review on one day and stretch on another — only stripping
-    // `kind === "review"` left duplicate-looking blocks on other weekdays.
+    // Pull-forward dedup: if the planner already scheduled a review for
+    // this concept elsewhere in the week, lift it out before we insert the
+    // Thursday slot. One review per concept per week keeps the calendar
+    // honest and makes the Socrates nudge a "consolidate early" decision,
+    // not a duplicate.
     let pulledForward = false;
     for (const day of next.days) {
-      for (let i = day.slots.length - 1; i >= 0; i--) {
-        if (day.slots[i].concept !== concept) continue;
-        const removed = day.slots.splice(i, 1)[0];
+      if (day.dayLabel === "Thu") continue;
+      const idx = day.slots.findIndex(
+        (s) => s.kind === "review" && s.concept === concept,
+      );
+      if (idx >= 0) {
+        const removed = day.slots.splice(idx, 1)[0];
         day.totalLoad -= removed.load;
         pulledForward = true;
       }
