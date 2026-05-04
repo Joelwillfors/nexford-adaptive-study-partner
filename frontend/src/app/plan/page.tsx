@@ -232,38 +232,40 @@ export default function PlanPage() {
   }
 
   /**
-   * Insert a 5-minute review slot for the given concept on Tuesday.
-   * Used by the proactive nudge "Yes, build it" CTA so the demo can
+   * Insert a 5-minute review slot for the given concept on Thursday.
+   * Used by the proactive nudge "Schedule it" CTA so the demo can
    * physically show the reviewer landing in the planner.
+   * Strips every existing slot for that concept across the week first
+   * (any kind — review, stretch, …) so planner output does not leave a
+   * duplicate on another day.
    */
   function injectReviewSlot(concept: string, label: string) {
     if (!plan) return;
     const next = structuredClone(plan) as WeekPlan;
-    const tuesday = next.days.find((d) => d.dayLabel === "Tue");
-    if (!tuesday) {
-      toast.error("Could not find Tuesday in the current plan — skipped review slot.");
+    // `weekTotalMin` is optional to re-derive; if we keep a cached value,
+    // normalizePlan would trust it and the band header drifts after edits.
+    delete (next as { weekTotalMin?: number }).weekTotalMin;
+    const thursday = next.days.find((d) => d.dayLabel === "Thu");
+    if (!thursday) {
+      toast.error("Could not find Thursday in the current plan — skipped review slot.");
       return;
     }
 
-    // Pull-forward dedup: if the planner already scheduled a review for
-    // this concept elsewhere in the week, lift it out before we insert the
-    // Tuesday slot. One review per concept per week keeps the calendar
-    // honest and makes the Socrates nudge a "consolidate early" decision,
-    // not a duplicate.
+    // Remove every slot for this concept on every day (review, stretch,
+    // practice, etc.). The greedy planner often places *strong* concepts
+    // as review on one day and stretch on another — only stripping
+    // `kind === "review"` left duplicate-looking blocks on other weekdays.
     let pulledForward = false;
     for (const day of next.days) {
-      if (day.dayLabel === "Tue") continue;
-      const idx = day.slots.findIndex(
-        (s) => s.kind === "review" && s.concept === concept,
-      );
-      if (idx >= 0) {
-        const removed = day.slots.splice(idx, 1)[0];
+      for (let i = day.slots.length - 1; i >= 0; i--) {
+        if (day.slots[i].concept !== concept) continue;
+        const removed = day.slots.splice(i, 1)[0];
         day.totalLoad -= removed.load;
         pulledForward = true;
       }
     }
 
-    tuesday.slots.unshift({
+    thursday.slots.unshift({
       concept,
       conceptLabel: label,
       load: 1,
@@ -273,7 +275,7 @@ export default function PlanPage() {
         ? `Pulled this review forward from later in the week — Socrates caught ${label} shaky today, so we consolidate while the trace is fresh.`
         : `Quick refresher you accepted from the Socrates nudge — keeps ${label} warm before the next module.`,
     });
-    tuesday.totalLoad += 1;
+    thursday.totalLoad += 1;
     setPlan(normalizePlan(next));
   }
 
