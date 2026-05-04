@@ -112,13 +112,13 @@ export function ProactiveNudge({
               >
                 {accepted ? (
                   <>
-                    Got it — added a {data.label} refresher to tomorrow&apos;s
+                    Got it — added a {data.label} refresher to Thursday&apos;s
                     plan.
                   </>
                 ) : (
                   <>
                     {data.label} was challenging today. Want me to slot a
-                    review for tomorrow so it stays warm?
+                    review for Thursday so it stays warm?
                   </>
                 )}
               </p>
