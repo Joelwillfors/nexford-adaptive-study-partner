@@ -27,8 +27,8 @@ interface ProactiveNudgeResponse {
 }
 
 interface ProactiveNudgeProps {
-  /** Called when the user accepts the suggestion. Default mounts a
-   *  5-min review on Tuesday in the parent's plan state. */
+  /** Called when the user accepts the suggestion. Parent mounts the
+   *  review slot in plan state (see `/plan` injectReviewSlot). */
   onAccept?: (concept: string, label: string) => void;
   variant?: "default" | "compact";
 }
@@ -111,14 +111,11 @@ export function ProactiveNudge({
                 }`}
               >
                 {accepted ? (
-                  <>
-                    Got it — added a {data.label} refresher to Tuesday&apos;s
-                    plan.
-                  </>
+                  <>Got it — added a refresher to Thursday&apos;s plan.</>
                 ) : (
                   <>
                     {data.label} was challenging today. Want me to slot a
-                    review on Tuesday so it stays warm?
+                    review for Thursday so it stays warm?
                   </>
                 )}
               </p>
